@@ -2,7 +2,7 @@ package wordle.solver;
 
 public class Wordle {
 
-    private static final String WORD_LIST_FILE_NAME = "/home/lukas/Library/words/wordlist-german.txt";
+    public static final String WORD_LIST_FILE_NAME = "https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt";
 
     public static void main(String[] args) {
         final WordleEngine w = new WordleEngine(WORD_LIST_FILE_NAME);

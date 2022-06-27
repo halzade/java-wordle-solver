@@ -6,12 +6,12 @@ import wordle.solver.WordleEngine;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static wordle.solver.Wordle.WORD_LIST_FILE_NAME;
 
 public class TestWordle {
 
     @Test
     public void test() {
-        final String WORD_LIST_FILE_NAME = "/home/lukas/Library/words/wordlist-german.txt";
         final WordleEngine w = new WordleEngine(WORD_LIST_FILE_NAME);
         w.green2('o');
         w.yellow1('r');

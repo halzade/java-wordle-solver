@@ -3,11 +3,11 @@ package wordle.solver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static java.lang.String.valueOf;
 
@@ -161,16 +161,15 @@ public class WordleEngine {
 
     private ArrayList<String> read() {
         final ArrayList<String> ret = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(wordListFileName))) {
-            String line = br.readLine();
-            while (line != null) {
+        try (Scanner scanner = new Scanner(new URL(wordListFileName).openStream())) {
+            while (scanner.hasNext()) {
+                String line = scanner.nextLine();
                 if (5 == line.length()) {
                     ret.add(line.toLowerCase());
                 }
-                line = br.readLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return ret;
     }

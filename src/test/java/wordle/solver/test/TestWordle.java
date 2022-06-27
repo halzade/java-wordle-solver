@@ -15,10 +15,12 @@ public class TestWordle {
         final WordleEngine w = new WordleEngine(WORD_LIST_FILE_NAME);
         w.green2('o');
         w.yellow1('r');
+        w.yellow1('s');
         w.yellow3('u');
         w.yellow3('s');
         w.gray('h');
         w.gray('m');
+        w.gray('p');
 
         final List<String> list = w.solve();
 

@@ -1,7 +1,8 @@
-package wordle.solver;
+package wordle.solver.engine.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import wordle.solver.engine.WordleEngineInt;
 
 import java.io.IOException;
 import java.net.URL;
@@ -10,8 +11,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.String.valueOf;
+import static wordle.solver.lists.WordLists.WORD_LIST_FILE_NAME;
 
-public class WordleEngine {
+public class WordleEngineImpl implements WordleEngineInt {
 
     private final List<Character> greenLetters_1 = new ArrayList<>();
     private final List<Character> greenLetters_2 = new ArrayList<>();
@@ -25,12 +27,15 @@ public class WordleEngine {
     private final List<Character> yellowLetters_5 = new ArrayList<>();
     private final List<Character> grayLetters = new ArrayList<>();
 
-    private final String wordListFileName;
+    private static final Logger log = LogManager.getLogger(WordleEngineImpl.class);
 
-    private static final Logger log = LogManager.getLogger(WordleEngine.class);
+    public static final WordleEngineInt Wordle;
 
-    public WordleEngine(String wordListFileName) {
-        this.wordListFileName = wordListFileName;
+    private WordleEngineImpl() {
+    }
+
+    static {
+        Wordle = new WordleEngineImpl();
     }
 
     public void green1(char c) {
@@ -78,9 +83,10 @@ public class WordleEngine {
     }
 
     public List<String> solve() {
+        log.debug("solve()");
 
         final ArrayList<String> words = read();
-        log.info("Process " + words.size() + " words");
+        log.info("process " + words.size() + " words");
 
         final List<List<Character>> greenLetters = pack(greenLetters_1, greenLetters_2, greenLetters_3, greenLetters_4, greenLetters_5);
         final List<List<Character>> yellowLetters = pack(yellowLetters_1, yellowLetters_2, yellowLetters_3, yellowLetters_4, yellowLetters_5);
@@ -145,11 +151,13 @@ public class WordleEngine {
             log.info(w);
             ret.add(w);
         }
-        log.info("Found:" + found);
+        log.info("found: " + found);
         return ret;
     }
 
     private List<List<Character>> pack(List<Character> list1, List<Character> list2, List<Character> list3, List<Character> list4, List<Character> list5) {
+        log.debug("pack()");
+
         final List<List<Character>> ret = new ArrayList<>(5);
         ret.add(list1);
         ret.add(list2);
@@ -159,9 +167,14 @@ public class WordleEngine {
         return ret;
     }
 
+    /**
+     * Read list of all words
+     */
     private ArrayList<String> read() {
+        log.debug("read()");
+
         final ArrayList<String> ret = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new URL(wordListFileName).openStream())) {
+        try (Scanner scanner = new Scanner(new URL(WORD_LIST_FILE_NAME).openStream())) {
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 if (5 == line.length()) {

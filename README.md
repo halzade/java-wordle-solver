@@ -6,7 +6,7 @@
 
 Use in IDE to easily edit guessed letters in `WordlePuzzle`
 
-For example
+An example 
 
     /* highlighted green letter on position 2 */
     Wordle.green2('o');
@@ -22,7 +22,7 @@ For example
 
     Wordle.solve();
 
-With pre-defined word list, `WordleEngine` find following words 
+With pre-defined word list, `WordleEngine` finds the following possible words 
 
     15:51:00 INFO WordleEngineImpl:90 - process 15920 words
     15:51:00 INFO WordleEngineImpl:152 - morus
